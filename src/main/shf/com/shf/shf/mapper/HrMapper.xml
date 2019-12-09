@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shf.shf.dao.HrDao">
+   <sql id="tableName">hr</sql>
+   <sql id="baseColumnList">
+         id,
+         name,
+         phone,
+         telephone,
+         address,
+         enabled,
+         username,
+         password,
+         userface,
+         remark
+	</sql> 
+	<resultMap id="baseResultMap"
+		type="com.shf.shf.domain.HrVO">
+       <result column="id" property="id"/>
+       <result column="name" property="name"/>
+       <result column="phone" property="phone"/>
+       <result column="telephone" property="telephone"/>
+       <result column="address" property="address"/>
+       <result column="enabled" property="enabled"/>
+       <result column="username" property="username"/>
+       <result column="password" property="password"/>
+       <result column="userface" property="userface"/>
+       <result column="remark" property="remark"/>
+	</resultMap>
+     
+     <insert id="save" parameterType="com.shf.shf.domain.HrVO">
+		INSERT INTO
+		<include refid="tableName" />
+		(
+		<include refid="baseColumnList" />
+		)
+		values 
+           (
+           #{id,jdbcType=INTEGER},
+#{name,jdbcType=VARCHAR},
+#{phone,jdbcType=CHAR},
+#{telephone,jdbcType=VARCHAR},
+#{address,jdbcType=VARCHAR},
+#{enabled,jdbcType=BIT},
+#{username,jdbcType=VARCHAR},
+#{password,jdbcType=VARCHAR},
+#{userface,jdbcType=VARCHAR},
+#{remark,jdbcType=VARCHAR}
+           )
+	</insert> 
+     
+    <insert id="saveForBatch" parameterType="java.util.List">
+		INSERT INTO
+		<include refid="tableName" />
+		(
+		<include refid="baseColumnList" />
+		)
+		values
+		<foreach collection="list" separator="," item="item">
+            (
+            	#{id,jdbcType=INTEGER},
+            	#{name,jdbcType=VARCHAR},
+            	#{phone,jdbcType=CHAR},
+            	#{telephone,jdbcType=VARCHAR},
+            	#{address,jdbcType=VARCHAR},
+            	#{enabled,jdbcType=BIT},
+            	#{username,jdbcType=VARCHAR},
+            	#{password,jdbcType=VARCHAR},
+            	#{userface,jdbcType=VARCHAR},
+            	#{remark,jdbcType=VARCHAR}
+             )
+        </foreach>
+	</insert>
+     
+     <update id="updateByKey"
+		parameterType="com.shf.shf.domain.HrVO">
+		UPDATE
+		<include refid="tableName" />
+		SET
+			id= #{id,jdbcType=INTEGER},
+			name= #{name,jdbcType=VARCHAR},
+			phone= #{phone,jdbcType=CHAR},
+			telephone= #{telephone,jdbcType=VARCHAR},
+			address= #{address,jdbcType=VARCHAR},
+			enabled= #{enabled,jdbcType=BIT},
+			username= #{username,jdbcType=VARCHAR},
+			password= #{password,jdbcType=VARCHAR},
+			userface= #{userface,jdbcType=VARCHAR},
+			remark= #{remark,jdbcType=VARCHAR}
+		WHERE ID = #{id,jdbcType=INTEGER}	
+	</update>
+
+	<update id="updateByKeySelective"
+		parameterType="com.shf.shf.domain.HrVO">
+		UPDATE
+		<include refid="tableName" />
+		<set>
+		<if test="id != null">
+			id= #{id,jdbcType=INTEGER},
+		</if>
+		<if test="name != null">
+			name= #{name,jdbcType=VARCHAR},
+		</if>
+		<if test="phone != null">
+			phone= #{phone,jdbcType=CHAR},
+		</if>
+		<if test="telephone != null">
+			telephone= #{telephone,jdbcType=VARCHAR},
+		</if>
+		<if test="address != null">
+			address= #{address,jdbcType=VARCHAR},
+		</if>
+		<if test="enabled != null">
+			enabled= #{enabled,jdbcType=BIT},
+		</if>
+		<if test="username != null">
+			username= #{username,jdbcType=VARCHAR},
+		</if>
+		<if test="password != null">
+			password= #{password,jdbcType=VARCHAR},
+		</if>
+		<if test="userface != null">
+			userface= #{userface,jdbcType=VARCHAR},
+		</if>
+		<if test="remark != null">
+			remark= #{remark,jdbcType=VARCHAR}
+		</if>
+		</set>
+		WHERE ID = #{id,jdbcType=INTEGER}
+	</update>
+
+	<delete id="removeByKey" parameterType="java.lang.String">
+		DELETE FROM
+		<include refid="tableName" />
+		WHERE  ID  = #{id,jdbcType=INTEGER}
+	</delete>
+
+	<delete id="removeForBatch">
+		DELETE FROM
+		<include refid="tableName" />
+		WHERE ID in
+		<foreach index="index" item="item" collection="ids" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+	
+	<delete id="removeByCondition">
+		DELETE FROM
+		<include refid="tableName" />
+		<where>
+			<foreach item="item" index="index" collection="params">
+				AND
+				${item.columnName} ${item.operator} #{item.value}
+			</foreach>
+		</where>
+	</delete>
+
+	<select id="queryList" resultMap="baseResultMap">
+		SELECT
+		<include refid="baseColumnList" />
+		FROM
+		<include refid="tableName" />
+		WHERE 1=1
+	</select>
+
+	<select id="queryByKey" parameterType="java.lang.String"
+		resultMap="baseResultMap">
+		SELECT
+		<include refid="baseColumnList" />
+		FROM
+		<include refid="tableName" />
+		WHERE ID  = #{id,jdbcType=INTEGER}
+	</select>
+
+	<select id="queryListByCondition" resultMap="baseResultMap">
+		SELECT
+		<include refid="baseColumnList" />
+		FROM
+		<include refid="tableName" />
+		<where>
+			<foreach item="item" index="index" collection="params">
+				AND
+				${item.columnName} ${item.operator} #{item.value}
+			</foreach>
+		</where>
+	</select>
+</mapper>

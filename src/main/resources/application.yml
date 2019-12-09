@@ -1,0 +1,26 @@
+#web容器配置
+server:
+  port: 11111
+  # Mybatis 配置
+mybatis:
+  mapperLocations: classpath*:com/*/*/mapper/*.xml
+  configuration:
+    call-setters-on-nulls: true
+#MySQL配置
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    multipleSource:
+      - name: default
+        url: jdbc:mysql://127.0.0.1:3306/shf?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+        username: root
+        password: 123qwe
+      - name: bb
+        url: jdbc:mysql://127.0.0.1:3306/mysql?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+        username: root
+        password: 123qwe
+  thymeleaf:
+    prefix: classpath:/static/
+    suffix: .html
+    mode: LEGACYHTML5
+    encoding: UTF-8

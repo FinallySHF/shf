@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shf.shf.dao.SysUserRoleDao">
+    <resultMap id="baseResultMap"
+               type="com.shf.shf.domain.SysUserRole">
+        <result column="user_Id" property="userId"/>
+        <result column="role_Id" property="roleId"/>
+    </resultMap>
+    <select id="listByUserId" resultMap="baseResultMap">
+        SELECT *
+        FROM sys_user_role
+        WHERE user_id = #{userId}
+    </select>
+</mapper>
