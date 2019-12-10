@@ -21,4 +21,9 @@ public class SysRoleServiceImpl implements SysRoleService {
         return sysRoleDao.selectById(id);
     }
 
+    @Override
+    public SysRole selectByName(String name) {
+        return sysRoleDao.selectByName(name);
+    }
+
 }

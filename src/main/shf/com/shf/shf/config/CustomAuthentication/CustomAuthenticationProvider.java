@@ -1,4 +1,4 @@
-package com.shf.shf.config;
+package com.shf.shf.config.CustomAuthentication;
 
 import com.shf.shf.service.impl.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +47,8 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
             throw new BadCredentialsException("密码错误");
         }
 
-        return new UsernamePasswordAuthenticationToken(inputName, inputPassword, userDetails.getAuthorities());
+//        return new UsernamePasswordAuthenticationToken(inputName, inputPassword, userDetails.getAuthorities());
+        return new UsernamePasswordAuthenticationToken(userDetails, inputPassword, userDetails.getAuthorities());
     }
 
     private boolean validateVerify(String inputVerify) {

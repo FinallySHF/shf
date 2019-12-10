@@ -1,6 +1,10 @@
 #web容器配置
 server:
   port: 11111
+  #  单位秒
+  servlet:
+    session:
+      timeout: 60
   # Mybatis 配置
 mybatis:
   mapperLocations: classpath*:com/*/*/mapper/*.xml
@@ -24,3 +28,10 @@ spring:
     suffix: .html
     mode: LEGACYHTML5
     encoding: UTF-8
+  main:
+    allow-bean-definition-overriding: true
+#  redis:
+#    host: 127.0.0.1
+#    port: 6379
+#  session:
+#    store-type: redis

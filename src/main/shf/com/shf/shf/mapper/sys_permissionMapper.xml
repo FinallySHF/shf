@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shf.shf.dao.sys_permissionDao">
+    <sql id="tableName">sys_permission</sql>
+    <sql id="baseColumnList">
+        id
+        ,
+        url,
+        role_id,
+        permission
+    </sql>
+    <resultMap id="baseResultMap"
+               type="com.shf.shf.domain.sys_permissionVO">
+        <result column="id" property="id"/>
+        <result column="url" property="url"/>
+        <result column="role_id" property="roleId"/>
+        <result column="permission" property="permission"/>
+    </resultMap>
+
+    <insert id="save" parameterType="com.shf.shf.domain.sys_permissionVO">
+        INSERT INTO
+        <include refid="tableName"/>
+        (
+        <include refid="baseColumnList"/>
+        )
+        values
+        (
+        #{id,jdbcType=INTEGER},
+        #{url,jdbcType=VARCHAR},
+        #{roleId,jdbcType=INTEGER},
+        #{permission,jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <insert id="saveForBatch" parameterType="java.util.List">
+        INSERT INTO
+        <include refid="tableName"/>
+        (
+        <include refid="baseColumnList"/>
+        )
+        values
+        <foreach collection="list" separator="," item="item">
+            (
+            #{id,jdbcType=INTEGER},
+            #{url,jdbcType=VARCHAR},
+            #{roleId,jdbcType=INTEGER},
+            #{permission,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+
+    <update id="updateByKey"
+            parameterType="com.shf.shf.domain.sys_permissionVO">
+        UPDATE
+        <include refid="tableName"/>
+        SET
+        id= #{id,jdbcType=INTEGER},
+        url= #{url,jdbcType=VARCHAR},
+        role_id= #{roleId,jdbcType=INTEGER},
+        permission= #{permission,jdbcType=VARCHAR}
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
+
+    <update id="updateByKeySelective"
+            parameterType="com.shf.shf.domain.sys_permissionVO">
+        UPDATE
+        <include refid="tableName"/>
+        <set>
+            <if test="id != null">
+                id= #{id,jdbcType=INTEGER},
+            </if>
+            <if test="url != null">
+                url= #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="roleId != null">
+                role_id= #{roleId,jdbcType=INTEGER},
+            </if>
+            <if test="permission != null">
+                permission= #{permission,jdbcType=VARCHAR}
+            </if>
+        </set>
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
+
+    <delete id="removeByKey" parameterType="java.lang.String">
+        DELETE FROM
+        <include refid="tableName"/>
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </delete>
+
+    <delete id="removeForBatch">
+        DELETE FROM
+        <include refid="tableName"/>
+        WHERE ID in
+        <foreach index="index" item="item" collection="ids" open="("
+                 separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+    <delete id="removeByCondition">
+        DELETE FROM
+        <include refid="tableName"/>
+        <where>
+            <foreach item="item" index="index" collection="params">
+                AND
+                ${item.columnName} ${item.operator} #{item.value}
+            </foreach>
+        </where>
+    </delete>
+
+    <select id="queryList" resultMap="baseResultMap">
+        SELECT
+        <include refid="baseColumnList"/>
+        FROM
+        <include refid="tableName"/>
+        WHERE 1=1
+    </select>
+
+    <select id="queryByKey" parameterType="java.lang.String"
+            resultMap="baseResultMap">
+        SELECT
+        <include refid="baseColumnList"/>
+        FROM
+        <include refid="tableName"/>
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="queryListByCondition" resultMap="baseResultMap">
+        SELECT
+        <include refid="baseColumnList"/>
+        FROM
+        <include refid="tableName"/>
+        <where>
+            <foreach item="item" index="index" collection="params">
+                AND
+                ${item.columnName} ${item.operator} #{item.value}
+            </foreach>
+        </where>
+    </select>
+    <select id="listByRoleId" resultMap="baseResultMap">
+        SELECT *
+        FROM sys_permission
+        WHERE role_id = #{roleId}
+    </select>
+</mapper>

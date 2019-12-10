@@ -1,4 +1,4 @@
-package com.shf.shf.config;
+package com.shf.shf.config.verify;
 
 
 /**

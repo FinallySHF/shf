@@ -1,4 +1,4 @@
-package com.shf.shf.config;
+package com.shf.shf.config.CustomAuthentication;
 
 import org.springframework.security.authentication.AuthenticationDetailsSource;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;

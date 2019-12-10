@@ -1,4 +1,4 @@
-package com.shf.shf.config;
+package com.shf.shf.config.CustomAuthentication;
 
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 
@@ -6,6 +6,13 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * 获取用户登录时携带的额外信息
+ * 自定义额外信息可添加多个，第一步常见details
+ * 然后创建CustomAuthenticationProvider去登录认证，存放user信息
+ * 然后将CustomAuthenticationProvider放入CustomAuthenticationDetailsSource
+ * 最后在WebSecurityConfig中配置相关权限验证
+ * --CustomWebAuthenticationDetails--CustomAuthenticationProvider
+ * --CustomAuthenticationDetailsSource--WebSecurityConfig
+ *
  *
  * @author sun.hf
  * @since 2018/5/9 11:15

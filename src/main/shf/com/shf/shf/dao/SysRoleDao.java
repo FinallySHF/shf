@@ -12,4 +12,6 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface SysRoleDao {
     SysRole selectById(Integer id);
+
+    SysRole selectByName(String name);
 }

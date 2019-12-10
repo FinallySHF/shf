@@ -1,7 +1,6 @@
 package com.shf.shf.service;
 
 import com.shf.shf.domain.SysRole;
-import org.apache.ibatis.annotations.Mapper;
 
 /**
  * <p><b>SysRoleDao</b></p>
@@ -12,4 +11,6 @@ import org.apache.ibatis.annotations.Mapper;
 public interface SysRoleService {
 
     SysRole selectById(Integer id);
+
+    SysRole selectByName(String name);
 }
